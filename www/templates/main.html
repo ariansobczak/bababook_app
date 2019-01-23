@@ -1,0 +1,64 @@
+<ion-view title="Your library">
+  <ion-nav-buttons side="right" class="has-header">
+    
+  </ion-nav-buttons>
+  <ion-content padding="false" class="has-header">
+      <ion-refresher on-refresh="getLent()">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+    <!-- <div class="row no-padding info">
+      <div class="col col-33">
+        <p>lended books</p>
+        <h1>{{lended.length}}</h1>
+      </div>
+      <div class="col col-33">
+        <p>rented</p>
+        <h1>10</h1>
+      </div>
+      <div class="col col-33">
+        <p>rented</p>
+        <h1>10</h1>
+      </div>
+    </div> -->
+    <div class="item item-divider">Borrowed books
+        <span class="badge badge-positive">All {{lended.length}}</span>
+    </div>
+    <section id="cd-timeline" class="cd-container">
+      <div ng-repeat="l in lended | filter:{returned:false} | orderBy : 'returnDate'">
+        <div class="cd-timeline-block">
+          <!-- CUSTOMIZE YOUR STYLE USING DEFAULT IONIC VALUES SUCH AS POSITIVE, CALM, BALANCED,... -->
+          <div class="cd-timeline-icon cd-timeline-date text-center positive">
+            <span class="day">{{l.returnDate | date: "d"}}</span>
+            <span class="month">{{l.returnDate | date: "MMM"}}</span>
+            <!-- <img ng-src="{{l.book.cover}}"></img> -->
+          </div>
+          <!-- CUSTOMIZE YOUR STYLE USING DEFAULT IONIC VALUES SUCH AS POSITIVE, CALM, BALANCED,... -->
+          <div class="cd-timeline-content padding positive">
+            <button style="position:absolute;top:10px;right:0" class="button button-clear button-positive icon"
+              ng-click="remindMe(l)" ng-class="{'ion-ios-bell-outline': !l.reminded, 'ion-ios-bell': l.reminded}"></button>
+            <h5 class="marginBottom0 marginTop0">{{l.book.title}} <small class="dark">{{l.book.author}}</small></h5>
+            <p class="marginTop5 marginBottom0 cd-author"><i class="icon ion-android-calendar"></i> Return before {{l.returnDate |
+              date: "EEEE, dd MMM yyyy"}}</p>
+            <button ng-click="requestForExtend(l)" class="button button-positive" ng-show="!l.extended && !l.requested">
+              Request to extend
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="list">
+      <div class="item item-divider">
+        Your previous borrowed books
+      </div>
+      <a class="item item-thumbnail-left" href="#" ng-repeat="l in lended | filter:{returned:true}">
+        <img ng-src="{{l.book.cover}}">
+        <h2>{{l.book.title}}</h2>
+        <span class="item-note"><i class="fa fa-calendar-o"></i>&nbsp;{{l.lendDate | date: "EEE, dd MMM"}} -
+          {{l.returnDate | date: "EEE, dd MMM"}}</span>
+        <p>{{l.book.author}}</p>
+        <div ng-disabled="true" style="margin-top: 1em; margin-bottom:0;" data-angular-rating-icons read-only="true" color-base="gray"
+          ng-model="l.book.starCount"></div>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

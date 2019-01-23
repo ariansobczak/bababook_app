@@ -1,0 +1,29 @@
+<ion-view title="Events">
+  <ion-content padding="false" class="has-header">
+    <ion-list>
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Search event" ng-model="search">
+      </label>
+    <div>
+      <div class=" card" ng-repeat="e in events | filter:search | orderBy:'start':false" ng-click="details(e)">
+        <div class="item item-image">
+          <div class="event-cover" ng-style="{'background-image':'url({{e.cover}})'}">
+          </div>
+        </div>
+        <div class="item item-body align-left">
+          <h2 class="positive margin0">{{e.title}}</h2>
+          <small class="text-muted"><i class="fa fa-calendar"></i>&nbsp; {{moment(e.start).format("ddd, MMM Do YYYY,
+            h:mm")}}</small>
+          <div>
+            <p style="line-height: 1.2em">{{e.desc}}</p>
+            <button ng-disabled="!canParticipate(e)" class="button icon-left ion-ios-checkmark-outline button-balanced" ng-click="goEvent(e)">Join</button>
+            <button ng-disabled="canParticipate(e)" class="button icon-left ion-ios-close-outline button-assertive" ng-click="cantGoEvent(e)">Can't go</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-list>
+
+  </ion-content>
+</ion-view>

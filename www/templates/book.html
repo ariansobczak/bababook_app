@@ -1,0 +1,26 @@
+<ion-view view-title="Books" title="Books" cache-view="false" class="has-fotter">
+  <ion-content padding="true" scroll="true" class="has-header">
+    <div class="row">
+      <div class="col col-50">
+        <img class="align-center cover" ng-src="{{b.cover}}">
+      </div>
+      <div class="col col-100">
+        <h2>{{b.title}}</h2>
+        <span>{{b.author}}</span>
+        <p><small>{{b.year}}</small></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p style="line-height: 1.5em">{{b.desc}}</p>
+        <p>Pages: {{b.pages}}</p>
+        <p>ISBN: {{b.ISBN}}</p>
+        <p>Language: {{b.lang}}</p>
+      </div>
+    </div>
+    <div class="bar bar-footer">
+      <div ng-if="b.lended" class="title positive align-center">This book is lended</div>
+      <button ng-if="!b.lended" style="margin: 0" class="item-note button button-outline button-block icon-left ion-ios-bookmarks-outline button-positive" ng-click="requestBorrow(b, user)">Request to this book</button>
+    </div>
+  </ion-content>
+</ion-view>

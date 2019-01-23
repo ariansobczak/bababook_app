@@ -1,0 +1,10 @@
+[{
+    title: "Harry Potter i Kamień Filozoficzny",
+    author: "J.K. Rowling",
+    desc: "Harry Potter do dnia swoich jedenastych urodzin był przekonany, że jest całkiem zwyczajnym chłopcem. To znaczy w jego życiu dochodziło do niewyjaśnionych wydarzeń, ale to przecież przypadek, niefortunny zbieg okoliczności albo po prostu przywidzenie, prawda? W końcu wujek Vernon i ciotka Petunia uparcie powtarzają, że nie istnieje coś takiego jak magia. Podłużna blizna w kształcie pioruna na czole Harry’ego jest tak samo zwyczajna, jak on sam – to pozostałość po tragicznym, ale przecież wciąż pospolitym wypadku samochodowym, w którym przed dziesięciu laty zginęli jego rodzice.",
+    pages: 328,
+    ISBN: "978-83-8008-211-3",
+    year: 2016,
+    cover: "http://media.merlin.pl/media/original/000/015/088/577cfb3d2e61d.jpg",
+    starCount: 5
+}]

@@ -1,0 +1,42 @@
+{
+    "project_info": {
+      "project_number": "1051030206984",
+      "firebase_url": "https://bookify-aac93.firebaseio.com",
+      "project_id": "bookify-aac93",
+      "storage_bucket": "bookify-aac93.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:1051030206984:android:1d61c51d163b0ef0",
+          "android_client_info": {
+            "package_name": "com.ariansobczak.bababook"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "1051030206984-6sd5mdaa12ber27qjodf8sm4s3137s39.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDKj39N_EB1J1zykG1f_HeRiOmakgSyLfs"
+          }
+        ],
+        "services": {
+          "analytics_service": {
+            "status": 1
+          },
+          "appinvite_service": {
+            "status": 1,
+            "other_platform_oauth_client": []
+          },
+          "ads_service": {
+            "status": 2
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

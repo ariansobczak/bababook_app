@@ -1,89 +1,99 @@
-// Ionic Starter App
+// Default colors
+var brandPrimary = '#20a8d8';
+var brandSuccess = '#4dbd74';
+var brandInfo = '#63c2de';
+var brandWarning = '#f8cb00';
+var brandDanger = '#f86c6b';
+var mintColor = '#00C49E';
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+var grayDark = '#2a2c36';
+var gray = '#55595c';
+var grayLight = '#818a91';
+var grayLighter = '#d1d4d7';
+var grayLightest = '#f8f9fa';
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs).
-    // The reason we default this to hidden is that native apps don't usually show an accessory bar, at
-    // least on iOS. It's a dead giveaway that an app is using a Web View. However, it's sometimes
-    // useful especially with forms, though we would prefer giving the user a little more room
-    // to interact with the app.
-    if (window.cordova && window.Keyboard) {
-      window.Keyboard.hideKeyboardAccessoryBar(true);
-    }
+angular.module('app', [
+  'ionic', 
+  'app.controllers', 
+  'app.routes', 
+  'app.directives', 
+  'app.services', 
+  'firebase', 
+  'firebaseConfig', 
+  'ngCordovaOauth', 
+  'ngOpenFB',
+  'angular-rating-icons'
+])
 
-    if (window.StatusBar) {
-      // Set the statusbar to use the default style, tweak this to
-      // remove the status bar on iOS or change it to use white instead of dark colors.
-      StatusBar.styleDefault();
-    }
-  });
-})
-
-.config(function($stateProvider, $urlRouterProvider) {
-
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
-
-  // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
+  .config(function ($ionicConfigProvider, $sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist(['self', '*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
+    $ionicConfigProvider.tabs.position('bottom');
   })
 
-  // Each tab has its own nav history stack:
+  .run(['$rootScope', '$state', '$ionicPlatform', '$openFB', 'config', 'api',
+    function ($rootScope, $state, $ionicPlatform, $openFB, config, api) {
+      (function (d) {
+        // load the Facebook javascript SDK
 
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
+        var js,
+          id = 'facebook-jssdk',
+          ref = d.getElementsByTagName('script')[0];
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        if (d.getElementById(id)) {
+          return;
         }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+
+        ref.parentNode.insertBefore(js, ref);
+
+      }(document));
+
+      $rootScope.user = firebase.auth().currentUser || JSON.parse(window.localStorage.getItem('firebase:authUser'));
+
+      Object.keys(localStorage)
+      .map(function(key) { 
+        if(key.includes("firebase:authUser")) {
+            $rootScope.user = JSON.parse(localStorage.getItem(key));
         }
-      }
-    })
+      });
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  });
+      if(!$rootScope.user) $rootScope.user = firebase.auth().currentUser;
+      if(!$rootScope.user) $state.go('auth');
+      else $state.go('tabs.main');
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+      $ionicPlatform.ready(function () {
+        $rootScope.config = config;
 
-});
+        $openFB.init({
+          appId: '180052556272819',
+          channelUrl: 'templates/channel.html',
+          status: true,
+          cookie: true,
+          xfbml: true
+        });
+
+        if (window.cordova && window.cordova.plugins) {
+          // cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+          // cordova.plugins.Keyboard.disableScroll(true);
+
+          cordova.plugins.firebase.messaging.requestPermission().then(function (token) {
+            cordova.plugins.firebase.messaging.onMessage(function (data) {
+              cordova.plugins.notification.local.schedule({
+                title: data.title,
+                text: data.message
+              });
+  
+              api.saveNotification(data, $rootScope.user);
+            });
+          });
+        }
+        if (window.StatusBar) {
+          StatusBar.backgroundColorByHexString("#F7613C");
+          StatusBar.styleLightContent();
+        }
+      });
+    }])

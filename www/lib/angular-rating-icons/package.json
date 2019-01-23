@@ -1,0 +1,34 @@
+{
+    "name": "angular-rating-icons",
+    "version": "1.0.3",
+    "description": "Fully customizable AngularJS rating system with decimals and fontawesome",
+    "repository": "filipetedim/angular-rating-icons",
+    "homepage": "https://github.com/filipetedim/angular-rating-icons",
+    "keywords": [
+        "angularjs",
+        "angular",
+        "directive",
+        "input",
+        "stars",
+        "rating",
+        "ratings",
+        "icon",
+        "icons",
+        "fontawesome"
+    ],
+    "author": {
+     "name": "Filipe Tedim <filipetedim@gmail.com> (http://filipetedim.com)"
+    },
+    "license": "MIT",
+    "main": "dist/angular-rating-icons.min.js",
+    "files": [
+      "LICENSE",
+      "README.md",
+      "src/",
+      "dist/"
+    ],
+    "dependencies": {
+        "angular": ">=1.4.x <2.x",
+        "font-awesome": "~4.2.0"
+    }
+}

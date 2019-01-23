@@ -1,0 +1,13 @@
+<ion-view title="Notifications">
+  <ion-content padding="false" class="has-header">
+    <div class="list">
+      <div ng-if="notifications.length == 0" class="align-center" style="margin-top:1em">You don't have any notifications</div>
+      <div class="item item-avatar" href="#" ng-repeat="n in notifications | orderBy:'created':true">
+        <img ng-src="img/logo.png">
+        <h2>{{n.title}}</h2>
+        <p>{{n.message}}</p>
+        <span class="item-note">{{n.created | date:"hh:mm:ss dd/MM/yyyy"}}</span>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

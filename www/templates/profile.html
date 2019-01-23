@@ -1,0 +1,39 @@
+<ion-view title="Settings" hide-nav-bar="true" >
+  <ion-content padding="false" has-header="false" class="">
+    <div class="profile">
+      <img ng-src="{{user.photoURL}}?type=large" alt="" srcset="">
+    </div>
+    <div class="list">
+      <a class="item">
+        Username
+        <span class="item-note">
+          {{userInfo.displayName}}
+        </span>
+      </a>
+      <a class="item">
+        Email
+        <span class="item-note">
+          {{userInfo.email}}
+        </span>
+      </a>
+      <a class="item">
+        Registered
+        <span class="item-note">
+          {{userInfo.created | date: "EEE, dd MMM yyyy"}}
+        </span>
+      </a>
+      <div class="item item-toggle">
+          Remind me now
+          <label class="toggle toggle-assertive">
+            <input type="checkbox" ng-model="config.remindNow">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </div>
+    </div>
+      <div class="item">
+        <button class="button button-positive button-block icon No Icon" ng-click="signout()"> Sign out</button>
+    </div>
+  </ion-content>
+</ion-view>
